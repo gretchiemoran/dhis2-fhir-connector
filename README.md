@@ -40,9 +40,9 @@ This connector responds to requests for Location resources from the FHIR server.
 
 DHIS 2.29 must be installed and the DHIS2 demo DB with data for Sierra Leone can be used. No additional setup is required for the connector when using this data.
 
-In order to use the connector without any configuration change, DHIS2 Web API Endpoints should be accessible on http://localhost:8080/api.
+In order to use the connector without any configuration change, DHIS2 Web API Endpoints should be accessible on http://localhost:8085/api.
 
-The folowing GitHub repo has a sufficiently straightforward Docker Compose file for standing up this DHIS2 configuration: 
+The following GitHub repo has a sufficiently straightforward Docker Compose file for standing up this DHIS2 configuration: 
 ```
 https://github.com/pgracio/dhis2-docker
 ```
@@ -72,7 +72,7 @@ After successfully building the application also Maven can be used to run the ap
     
 Since the created WAR file is an executable WAR file (can also be disabled when building), also the following command can be entered in folder app/target in the console:
 
-    java -jar dhis2-fhir-connector.war 
+    java -jar dhis2-fhir-connector-exec.war 
 
 
 
