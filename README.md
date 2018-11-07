@@ -74,6 +74,20 @@ Since the created WAR file is an executable WAR file (can also be disabled when 
 
     java -jar dhis2-fhir-connector-exec.war 
 
+### Testing the Endpoints
 
+The two endpoints available are looking up an organization unit by ID, and searching all organization units (which will return all org units in the DHIS2 instance as FHIR locations). 
+
+#### Examples 
+
+Retrieve an organization unit by ID: 
+
+http://localhost:8083/fhir/Location/DQHGtTGOP6b?_pretty=true&_format=json
+
+Search for all organization units: 
+
+http://localhost:8083/fhir/Location?_pretty=true&_format=json
+
+ 
 
 
