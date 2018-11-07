@@ -1,0 +1,10 @@
+server:
+  port: 8083
+
+dhis2.fhir-adapter:
+  endpoint:
+    url: http://localhost:8085/
+    api-version: 29
+    system-authentication:
+      username: admin
+      password: district

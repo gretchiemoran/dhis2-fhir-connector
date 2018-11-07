@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <artifactId>dhis2-fhir-connector-app</artifactId>
+  <packaging>war</packaging>
+
+  <parent>
+    <groupId>com.eha.fhir.connector</groupId>
+    <artifactId>dhis2-fhir-connector</artifactId>
+    <version>0.1.0-SNAPSHOT</version>
+    <relativePath>..</relativePath>
+  </parent>
+
+  <name>dhis2-fhir-connector-app</name>
+
+  <properties>
+    <dhis2.username>admin</dhis2.username>
+    <dhis2.password>district</dhis2.password>
+    <dhis2.url>http://localhost:8085</dhis2.url>
+    <dhis2.apiVersion>29</dhis2.apiVersion>
+  </properties>
+
+  <dependencies>
+
+    <dependency>
+      <groupId>com.eha.fhir.connector</groupId>
+      <artifactId>dhis2-fhir-connector-common</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.eha.fhir.connector</groupId>
+      <artifactId>dhis2-fhir-connector-dhis</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.eha.fhir.connector</groupId>
+      <artifactId>dhis2-fhir-connector-fhir</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    
+  </dependencies>
+
+  <build>
+    <finalName>dhis2-fhir-connector-${project.version}</finalName>
+
+    <plugins>
+      <plugin>
+        <artifactId>maven-war-plugin</artifactId>
+        <configuration>
+          <archive>
+            <compress>false</compress>
+          </archive>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.eclipse.jetty</groupId>
+        <artifactId>jetty-maven-plugin</artifactId>
+        <version>9.4.12.v20180830</version>
+        <configuration>
+          <httpConnector>
+            <host>localhost</host>
+            <port>8083</port>
+          </httpConnector>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+  <profiles>
+    <profile>
+      <id>executable-war</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                        <configuration>
+                            <classifier>exec</classifier>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
+</project>

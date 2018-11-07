@@ -1,0 +1,10 @@
+server:
+  port: 8083
+
+dhis2.fhir-adapter:
+  endpoint:
+    url: '@dhis2.url@'
+    api-version: '@dhis2.apiVersion@'
+    system-authentication:
+      username: '@dhis2.username@'
+      password: '@dhis2.password@'
