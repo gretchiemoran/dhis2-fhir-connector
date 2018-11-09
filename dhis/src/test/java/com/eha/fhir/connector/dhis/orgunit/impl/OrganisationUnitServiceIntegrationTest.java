@@ -79,7 +79,7 @@ public class OrganisationUnitServiceIntegrationTest {
 	 * ORDER BY oul.level, ou.name
 	 * 
 	 */
-	@Test
+	//@Test
 	public void testGetRows() {
 		
 		Optional<OrganisationUnitRows> units = service.getRows("VBC6DfO71Ri");

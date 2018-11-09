@@ -8,7 +8,7 @@ __The connector is still under development and the repository contains the devel
 
 The use case for the connector is as such: 
 
-The connector war may be deployed beside DHIS2 (in the same container as the simplest scenario) and automatically a FHIR server is available to serve DHIS2 data in FHIR compatible format. Currently, we are prototyping with organization unit (DHIS2) to Location resource (FHIR) mapping only. 
+The connector war may be deployed beside DHIS2 (as an embedded executable in the simplest scenario) and automatically a FHIR server is available to serve DHIS2 data in FHIR compatible format. Currently, we are prototyping with organization unit (DHIS2) to Location resource (FHIR) mapping only. 
 
 ## Data Mapping
 
@@ -42,20 +42,62 @@ DHIS 2.29 must be installed and the DHIS2 demo DB with data for Sierra Leone can
 
 In order to use the connector without any configuration change, DHIS2 Web API Endpoints should be accessible on http://localhost:8085/api.
 
-The following GitHub repo has a sufficiently straightforward Docker Compose file for standing up this DHIS2 configuration: 
+The following GitHub repo has a sufficiently straightforward Docker Compose file for standing up this DHIS2 configuration.
 ```
 https://github.com/pgracio/dhis2-docker
 ```
 
 To change the connection parameters to DHIS2 for deployment, modify the properties in the pom.xml in the root of the /app folder. 
 
+```
+<properties>
+    ...
+    <dhis2.username>admin</dhis2.username>
+    <dhis2.password>district</dhis2.password>
+    <dhis2.url>http://localhost:8085</dhis2.url>
+    <dhis2.apiVersion>29</dhis2.apiVersion>
+  </properties>
+```
+
 To change the connection parameters to DHIS2 for successful unit testing, application-test.yml file in the /dhis/src/test/resources folder. 
 
+```
+...
+
+dhis2.fhir-adapter:
+  endpoint:
+    url: http://localhost:8085/
+    api-version: 29
+    system-authentication:
+      username: admin
+      password: district
+```
 
 ### Build and Deploy
+#### Configure
+
+The connector defaults to run on localhost at port 8083. 
+
+To change these defaults, modify the properties in the pom.xml in the root of the /app folder. 
+
+```
+<properties>
+    <application.port>8083</application.port>
+    ...
+  </properties>
+```
+
+To change the defaults for successful unit testing, application-test.yml file in the /dhis/src/test/resources folder. 
+
+```
+server:
+  port: 8083
+
+... 
+```
 #### Build
 
-In order to build the adapter Java Development Kit 8 and Maven 3.2 or later is required. No additional repositories need to be configured in Maven configuration. The following command builds the artifact dhis2-fhir-connector.war in sub-directory app/target.
+In order to build the adapter Java Development Kit 8 and Maven 3.2 or later is required. No additional repositories need to be configured in Maven configuration. The following command builds the artifact dhis2-fhir-connector.war in sub-directory app/target. Run this command in the root of the project directory.
 
     mvn clean install
 
@@ -66,17 +108,20 @@ The project can also be imported into an IDE like IntelliJ IDEA ULTIMATE or Ecli
 The connector WAR can be run with a servlet container 3.1 or later (like Apache Tomcat 8.5 or Jetty 9.3). In an IDE also class org.dhis2.fhir.adapter.App can be used to start the connector as Spring Boot application without an external servlet 
 container.
 
-After successfully building the application also Maven can be used to run the application. Enter the following command in folder app in the console:
+After successfully building the application Maven can be used to run the application. Enter the following command in folder app in the console:
 
     mvn spring-boot:run
     
-Since the created WAR file is an executable WAR file (can also be disabled when building), also the following command can be entered in folder app/target in the console:
+Since the created WAR file is an executable WAR file (can also be disabled when building), also the following command can be entered in folder app/target in the console (recommended for deployment):
 
     java -jar dhis2-fhir-connector-exec.war 
 
 ### Testing the Endpoints
 
-The two endpoints available are looking up an organization unit by ID, and searching all organization units (which will return all org units in the DHIS2 instance as FHIR locations). 
+The two endpoints available are:
+
+1. looking up an organization unit by ID, 
+2. and searching all organization units (which will return all org units in the DHIS2 instance as FHIR Locations). 
 
 #### Examples 
 

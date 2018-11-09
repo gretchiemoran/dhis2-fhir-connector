@@ -17,6 +17,7 @@
   <name>dhis2-fhir-connector-app</name>
 
   <properties>
+    <application.port>8083</application.port>
     <dhis2.username>admin</dhis2.username>
     <dhis2.password>district</dhis2.password>
     <dhis2.url>http://localhost:8085</dhis2.url>
@@ -53,17 +54,6 @@
           <archive>
             <compress>false</compress>
           </archive>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.eclipse.jetty</groupId>
-        <artifactId>jetty-maven-plugin</artifactId>
-        <version>9.4.12.v20180830</version>
-        <configuration>
-          <httpConnector>
-            <host>localhost</host>
-            <port>8083</port>
-          </httpConnector>
         </configuration>
       </plugin>
     </plugins>
